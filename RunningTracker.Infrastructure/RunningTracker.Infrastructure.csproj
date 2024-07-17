@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 
@@ -25,6 +23,10 @@
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RunningTracker.Domain\RunningTracker.Domain.csproj" />
   </ItemGroup>
 
 </Project>

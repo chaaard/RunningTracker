@@ -23,7 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\RunningTracker.Application\RunningTracker.Application.csproj" />
+    <ProjectReference Include="..\RunningTracker.Domain\RunningTracker.Domain.csproj" />
+    <ProjectReference Include="..\RunningTracker.Infrastructure\RunningTracker.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
