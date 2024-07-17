@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RunningTracker.Application.DTOs;
 using RunningTracker.Application.Interfaces;
 using RunningTracker.Domain.Models;
+using Serilog;
 
 namespace RunningTracker.Controllers
 {
@@ -20,50 +21,96 @@ namespace RunningTracker.Controllers
         [HttpGet("GetAllUsers")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return Ok(await _userService.GetAllUsersAsync());
+            try
+            {
+                var users = await _userService.GetAllUsersAsync();
+                Log.Information("Retrieved all users");
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error retrieving all users");
+                return StatusCode(500, "Internal server error");
+            }
         }
-
-        [HttpGet("GetUserById{id}")]
+        [HttpGet("GetUserById/{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
-
-            if (user == null)
+            try
             {
-                return NotFound();
-            }
+                var user = await _userService.GetUserByIdAsync(id);
 
-            return Ok(user);
+                if (user == null)
+                {
+                    Log.Warning("User with ID {UserId} not found", id);
+                    return NotFound();
+                }
+
+                Log.Information("Retrieved user with ID {UserId}", id);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error retrieving user with ID {UserId}", id);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost("RegisterUser")]
         public async Task<IActionResult> CreateUser(UserCreateDto userProfileCreateDto)
         {
-            var user = await _userService.CreateUserAsync(userProfileCreateDto);
-            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+            try
+            {
+                var user = await _userService.CreateUserAsync(userProfileCreateDto);
+                return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error creating user");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        [HttpPut("UpdateUser{id}")]
+        [HttpPut("UpdateUser/{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserUpdateDto userProfileUpdateDto)
         {
-            var user = await _userService.UpdateUserAsync(id, userProfileUpdateDto);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var user = await _userService.UpdateUserAsync(id, userProfileUpdateDto);
+                if (user == null)
+                {
+                    Log.Warning("User with ID {UserId} not found", id);
+                    return NotFound();
+                }
+
+                return Ok(user);
             }
-            return Ok(user);
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error updating user with ID {UserId}", id);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        [HttpDelete("DeleteUser{id}")]
+        [HttpDelete("DeleteUser/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var result = await _userService.DeleteUserAsync(id);
-            if (!result)
+            try
             {
-                return NotFound();
-            }
+                var result = await _userService.DeleteUserAsync(id);
+                if (!result)
+                {
+                    Log.Warning("User with ID {UserId} not found", id);
+                    return NotFound();
+                }
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error deleting user with ID {UserId}", id);
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }
