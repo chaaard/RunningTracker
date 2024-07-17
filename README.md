@@ -3,7 +3,7 @@
 ## Versioning
 .NET Core Version
 ```sh
-$ 6
+6
 ```
 
 ## Project Structure
