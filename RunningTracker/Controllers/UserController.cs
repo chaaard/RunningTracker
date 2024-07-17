@@ -17,13 +17,13 @@ namespace RunningTracker.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllUsers")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return Ok(await _userService.GetAllUsersAsync());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetUserById{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -36,14 +36,14 @@ namespace RunningTracker.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
+        [HttpPost("RegisterUser")]
         public async Task<IActionResult> CreateUser(UserCreateDto userProfileCreateDto)
         {
             var user = await _userService.CreateUserAsync(userProfileCreateDto);
             return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("UpdateUser{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserUpdateDto userProfileUpdateDto)
         {
             var user = await _userService.UpdateUserAsync(id, userProfileUpdateDto);
@@ -54,7 +54,7 @@ namespace RunningTracker.Controllers
             return Ok(user);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteUser{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var result = await _userService.DeleteUserAsync(id);
