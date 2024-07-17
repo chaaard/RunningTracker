@@ -36,7 +36,7 @@ namespace RunningTracker.Controllers
         }
 
         [HttpGet("GetRunningActivityById/{id}")]
-        public async Task<ActionResult<RunningActivity>> GetRunningActivity(int id)
+        public async Task<ActionResult<RunningActivity>> GetRunningActivityById(int id)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace RunningTracker.Controllers
             try
             {
                 var addedRunningActivity = await _runningActivityService.AddRunningActivityAsync(runningActivityDto);
-                return CreatedAtAction(nameof(GetRunningActivity), new { id = addedRunningActivity.Id }, addedRunningActivity);
+                return CreatedAtAction(nameof(GetRunningActivityById), new { id = addedRunningActivity.Id }, addedRunningActivity);
             }
             catch (ArgumentException ex)
             {

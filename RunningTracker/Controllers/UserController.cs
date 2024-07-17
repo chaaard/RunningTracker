@@ -83,7 +83,7 @@ namespace RunningTracker.Controllers
                     return NotFound();
                 }
 
-                return Ok(user);
+                return NoContent();
             }
             catch (Exception ex)
             {

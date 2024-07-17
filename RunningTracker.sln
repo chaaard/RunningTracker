@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningTracker", "RunningTracker\RunningTracker.csproj", "{E7BC5A14-9882-4521-B716-2404177ECFCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunningTracker", "RunningTracker\RunningTracker.csproj", "{E7BC5A14-9882-4521-B716-2404177ECFCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningTracker.Application", "RunningTracker.Application\RunningTracker.Application.csproj", "{B478D465-8480-4866-BA1D-096A38143605}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunningTracker.Application", "RunningTracker.Application\RunningTracker.Application.csproj", "{B478D465-8480-4866-BA1D-096A38143605}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningTracker.Domain", "RunningTracker.Domain\RunningTracker.Domain.csproj", "{014DB534-C10D-4F0C-A9C8-5FB2B46A136E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunningTracker.Domain", "RunningTracker.Domain\RunningTracker.Domain.csproj", "{014DB534-C10D-4F0C-A9C8-5FB2B46A136E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningTracker.Infrastructure", "RunningTracker.Infrastructure\RunningTracker.Infrastructure.csproj", "{5E2E31D5-CDED-4925-9FC2-440A63EA07BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RunningTracker.Infrastructure", "RunningTracker.Infrastructure\RunningTracker.Infrastructure.csproj", "{5E2E31D5-CDED-4925-9FC2-440A63EA07BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningTracker.UnitTesting", "RunningTracker.UnitTesting\RunningTracker.UnitTesting.csproj", "{1D71FBAD-8F4B-4449-A357-E791B9B5725E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{5E2E31D5-CDED-4925-9FC2-440A63EA07BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E2E31D5-CDED-4925-9FC2-440A63EA07BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E2E31D5-CDED-4925-9FC2-440A63EA07BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D71FBAD-8F4B-4449-A357-E791B9B5725E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D71FBAD-8F4B-4449-A357-E791B9B5725E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D71FBAD-8F4B-4449-A357-E791B9B5725E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D71FBAD-8F4B-4449-A357-E791B9B5725E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
