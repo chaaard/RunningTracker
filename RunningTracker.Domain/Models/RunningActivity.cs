@@ -21,6 +21,6 @@ namespace RunningTracker.Domain.Models
         public double Duration => (EndDateTime - StartDateTime).TotalMinutes;
 
         [NotMapped]
-        public double AveragePace => Duration / Distance;
+        public double AveragePace => Duration > 0 ? Duration / Distance : 0;
     }
 }

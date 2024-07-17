@@ -19,6 +19,9 @@ builder.Services.AddDbContext<RunningTrackerContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddScoped<IRunningActivityService, RunningActivityService>();
+builder.Services.AddScoped<IRunningActivityRepository, RunningActivityRepository>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddControllers()

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace RunningTracker.Application.DTOs
 {
-    public class RunningActivityCreateDto
+    public class RunningActivityDto
     {
-        public int Id { get; set; }
-        public string Location { get; set; } = string.Empty;
         public DateTime StartDateTime { get; set; }
-        public DateTime EndDateTime { get; set; }
+        public DateTime? EndDateTime { get; set; }
         public double Distance { get; set; }
+        public string Location { get; set; }
+        public int UserId { get; set; }
     }
 }
