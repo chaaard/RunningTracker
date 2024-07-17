@@ -31,16 +31,38 @@ builder.Services.AddControllers()
 
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "RunningTrackerExam API", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "RunningTracker API", Version = "v1" });
 });
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
 
-builder.Host.UseSerilog();
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
+          .ReadFrom.Configuration(hostingContext.Configuration)
+          .WriteTo.Console());
+
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging(options =>
+{
+    options.GetLevel = (httpContext, elapsed, ex) =>
+    {
+        if (ex != null || httpContext.Response.StatusCode > 499)
+        {
+            return Serilog.Events.LogEventLevel.Error;
+        }
+        else if (httpContext.Response.StatusCode > 399)
+        {
+            return Serilog.Events.LogEventLevel.Warning;
+        }
+        else
+        {
+            return Serilog.Events.LogEventLevel.Information;
+        }
+    };
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

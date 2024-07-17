@@ -4,6 +4,7 @@ using RunningTracker.Application.DTOs;
 using RunningTracker.Application.Interfaces;
 using RunningTracker.Application.Services;
 using RunningTracker.Domain.Models;
+using Serilog;
 
 namespace RunningTracker.Controllers
 {
@@ -21,18 +22,40 @@ namespace RunningTracker.Controllers
         [HttpGet("GetAllRunningActivities")]
         public async Task<ActionResult<IEnumerable<RunningActivity>>> GetAllRunningActivitiesAsync()
         {
-            return Ok(await _runningActivityService.GetAllRunningActivitiesAsync());
+            try
+            {
+                var runningActivities = await _runningActivityService.GetAllRunningActivitiesAsync();
+                Log.Information("Retrieved all running activities");
+                return Ok(runningActivities);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error retrieving all running activities");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        [HttpGet("GetRunningActivityById{id}")]
+        [HttpGet("GetRunningActivityById/{id}")]
         public async Task<ActionResult<RunningActivity>> GetRunningActivity(int id)
         {
-            var runningActivity = await _runningActivityService.GetRunningActivityByIdAsync(id);
-            if (runningActivity == null)
+            try
             {
-                return NotFound();
+                var runningActivity = await _runningActivityService.GetRunningActivityByIdAsync(id);
+
+                if (runningActivity == null)
+                {
+                    Log.Warning("Running activity with ID {RunningActivityId} not found", id);
+                    return NotFound();
+                }
+
+                Log.Information("Retrieved running activity with ID {RunningActivityId}", id);
+                return Ok(runningActivity);
             }
-            return Ok(runningActivity);
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error retrieving running activity with ID {RunningActivityId}", id);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost("AddRunningActivity")]
@@ -45,11 +68,17 @@ namespace RunningTracker.Controllers
             }
             catch (ArgumentException ex)
             {
+                Log.Warning("Error adding running activity: {ErrorMessage}", ex.Message);
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error adding running activity");
+                return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpPut("UpdateRunningActivity{id}")]
+        [HttpPut("UpdateRunningActivity/{id}")]
         public async Task<IActionResult> UpdateRunningActivity(int id, RunningActivityDto runningActivityDto)
         {
             try
@@ -59,15 +88,29 @@ namespace RunningTracker.Controllers
             }
             catch (ArgumentException ex)
             {
+                Log.Warning("Error updating running activity: {ErrorMessage}", ex.Message);
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error updating running activity with ID {RunningActivityId}", id);
+                return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpDelete("DeleteRunningActivity{id}")]
+        [HttpDelete("DeleteRunningActivity/{id}")]
         public async Task<IActionResult> DeleteRunningActivity(int id)
         {
-            await _runningActivityService.DeleteRunningActivityAsync(id);
-            return NoContent();
+            try
+            {
+                await _runningActivityService.DeleteRunningActivityAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error deleting running activity with ID {RunningActivityId}", id);
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }
