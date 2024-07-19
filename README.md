@@ -48,7 +48,7 @@
 │   ├── UserControllerTests.cs
 │   └── Usings.cs
 ├── README.md
-├── RunningTracker.sln
+└── RunningTracker.sln
 ```
 
 ## Setting Up
