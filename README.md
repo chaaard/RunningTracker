@@ -24,7 +24,7 @@
 │   ├── Interfaces
 │       ├── IRunningActivityService.cs
 │       └── IUserService.cs
-│   ├── Services
+│   └── Services
 │       ├── RunningActivityService.cs
 │       └── UserService.cs
 ├── RunningTracker.Domain
